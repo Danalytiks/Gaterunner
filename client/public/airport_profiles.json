@@ -1,0 +1,62 @@
+{
+  "profiles": {
+    "small": {
+      "name": "Small Airport",
+      "description": "Regional airport with simple layout",
+      "deplane_gate_p50": 6,
+      "deplane_gate_p90": 12,
+      "deplane_remote_p50": 15,
+      "deplane_remote_p90": 28,
+      "transfer_same_terminal_p50": 5,
+      "transfer_same_terminal_p90": 10,
+      "transfer_different_terminal_p50": 8,
+      "transfer_different_terminal_p90": 18,
+      "security_domestic_p50": 8,
+      "security_domestic_p90": 15,
+      "security_international_p50": 15,
+      "security_international_p90": 30
+    },
+    "medium": {
+      "name": "Medium Airport",
+      "description": "Mid-size airport with multiple terminals",
+      "deplane_gate_p50": 8,
+      "deplane_gate_p90": 15,
+      "deplane_remote_p50": 22,
+      "deplane_remote_p90": 40,
+      "transfer_same_terminal_p50": 5,
+      "transfer_same_terminal_p90": 12,
+      "transfer_different_terminal_p50": 12,
+      "transfer_different_terminal_p90": 25,
+      "security_domestic_p50": 10,
+      "security_domestic_p90": 20,
+      "security_international_p50": 15,
+      "security_international_p90": 30
+    },
+    "hub": {
+      "name": "Hub Airport",
+      "description": "Large hub airport with complex layout",
+      "deplane_gate_p50": 10,
+      "deplane_gate_p90": 18,
+      "deplane_remote_p50": 25,
+      "deplane_remote_p90": 40,
+      "transfer_same_terminal_p50": 8,
+      "transfer_same_terminal_p90": 15,
+      "transfer_different_terminal_p50": 15,
+      "transfer_different_terminal_p90": 30,
+      "security_domestic_p50": 12,
+      "security_domestic_p90": 25,
+      "security_international_p50": 18,
+      "security_international_p90": 35
+    }
+  },
+  "penalties": {
+    "remote_stand_additional_p50": 5,
+    "remote_stand_additional_p90": 10,
+    "terminal_change_additional_p50": 3,
+    "terminal_change_additional_p90": 8
+  },
+  "defaults": {
+    "profile": "medium",
+    "description": "Default profile used when airport characteristics are unclear"
+  }
+}
