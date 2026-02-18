@@ -1,5 +1,11 @@
 # GateRunner
 A production-style data science project modeling real-world airport connection risk using probabilistic timing distributions.
+## Why this project matters
+
+Flight connections are one of the most common operational risks in aviation.
+Missed connections cost airlines millions yearly and affect passenger satisfaction.
+GateRunner models this decision process using timing uncertainty instead of fixed thresholds.
+
 
 
 ![Main Screenshot](gaterunner.png)
