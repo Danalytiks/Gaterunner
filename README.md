@@ -1,6 +1,9 @@
 # GateRunner
 
+![Main Screenshot](gaterunner.png)
+
 GateRunner is a data-driven application that predicts whether a passenger can safely make a flight connection.
+
 
 ## Problem
 
