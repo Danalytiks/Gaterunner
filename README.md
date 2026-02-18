@@ -11,6 +11,13 @@ GateRunner models this decision process using timing uncertainty instead of fixe
 ![Main Screenshot](gaterunner.png)
 
 GateRunner is a data-driven application that predicts whether a passenger can safely make a flight connection.
+## Tech Stack
+
+- React
+- Node.js
+- TypeScript
+- JSON-based airport configuration models
+
 
 
 ## Problem
