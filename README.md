@@ -1,4 +1,6 @@
 # GateRunner
+A production-style data science project modeling real-world airport connection risk using probabilistic timing distributions.
+
 
 ![Main Screenshot](gaterunner.png)
 
