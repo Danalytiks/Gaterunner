@@ -52,6 +52,28 @@ Connections are classified as:
 
 ---
 
+## Tech Stack
+
+- React
+- Node.js
+- TypeScript
+- JSON-based airport configuration models
+
+---
+
+## Project Structure
+
+gaterunner-mvp/
+├── client/          # Frontend React application
+├── server/          # Backend services
+├── shared/          # Shared logic and models
+├── patches/         # Configuration patches
+├── package.json
+├── tsconfig.json
+└── README.md
+
+---
+
 ## How to Run
 
 ### 1. Clone the repository
