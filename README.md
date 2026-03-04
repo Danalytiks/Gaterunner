@@ -52,7 +52,7 @@ Connections are classified as:
 
 ---
 
-## How to run
+## How to Run
 
 ### 1. Clone the repository
 
@@ -60,27 +60,34 @@ Connections are classified as:
 git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
 
----
+2. Install dependencies
 
-### 2. Install dependencies
-Make sure you have Node.js installed.
-- pnpm install
+Make sure you have Node.js (LTS) installed.
 
-### 3. Run the development server
-- pnpm run dev
+Then install the project dependencies:
 
-### 4. Open the application
+pnpm install
+3. Run the development server
+pnpm run dev
+4. Open the application
+
 Open your browser and go to:
+
 http://localhost:3000
-
 Prerequisites
-* Node.js (LTS)
-* pnpm
 
-If pnpm is not installed:
+The following tools must be installed:
 
-- corepack enable
-- corepack prepare pnpm@latest --activate
+Node.js (LTS)
+
+pnpm
+
+If pnpm is not installed, run:
+
+corepack enable
+corepack prepare pnpm@latest --activate
+
+
 
 
 
