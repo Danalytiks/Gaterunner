@@ -1,5 +1,9 @@
 # GateRunner
-A production-style data science project modeling real-world airport connection risk using probabilistic timing distributions.
+
+GateRunner is an aviation analytics tool that estimates whether a passenger can safely make a flight connection by modeling real airport transfer times and operational uncertainty.
+
+![GateRunner](gaterunner.png)
+
 ## Why this project matters
 
 Flight connections are one of the most common operational risks in aviation.
