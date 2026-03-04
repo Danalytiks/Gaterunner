@@ -60,13 +60,12 @@ cd gaterunner-mvp
 
 2. Install dependencies
 Make sure you have Node.js installed.
-pnpm install
+- pnpm install
 
 3. Run the development server
-pnpm run dev
+- pnpm run dev
 
 4. Open the application
-
 Open your browser and go to:
 http://localhost:3000
 
@@ -76,9 +75,8 @@ Prerequisites
 
 If pnpm is not installed:
 
-corepack enable
-corepack prepare 
-pnpm@latest --activate
+- corepack enable
+- corepack prepare pnpm@latest --activate
 
 
 
