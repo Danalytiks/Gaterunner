@@ -55,7 +55,6 @@ Connections are classified as:
 ## How to Run
 
 ### 1. Clone the repository
-
 ```bash
 git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
