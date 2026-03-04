@@ -71,7 +71,6 @@ pnpm run dev
 
 4. Open the application
 Open your browser and go to:
-
 http://localhost:3000
 
 Prerequisites
