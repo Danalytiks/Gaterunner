@@ -59,10 +59,7 @@ git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
 
 2. Install dependencies
-
-Make sure you have Node.js (LTS) installed.
-
-Then install project dependencies:
+Make sure you have Node.js installed.
 pnpm install
 
 3. Run the development server
@@ -74,17 +71,14 @@ Open your browser and go to:
 http://localhost:3000
 
 Prerequisites
-
-## You need the following installed:
-
-Node.js (LTS)
-
-pnpm
+* Node.js (LTS)
+* pnpm
 
 If pnpm is not installed:
-
 corepack enable
 corepack prepare pnpm@latest --activate
+
+
 
 
 
