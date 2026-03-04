@@ -63,6 +63,7 @@ Connections are classified as:
 
 ## Project Structure
 
+```
 gaterunner-mvp/
 ├── client/          # Frontend React application
 ├── server/          # Backend services
@@ -71,6 +72,7 @@ gaterunner-mvp/
 ├── package.json
 ├── tsconfig.json
 └── README.md
+```
 
 ---
 
