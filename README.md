@@ -58,6 +58,7 @@ Connections are classified as:
 ```bash
 git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
+```
 
 ---
 
@@ -93,7 +94,6 @@ If pnpm is not installed, run:
 * corepack enable
 * corepack prepare pnpm@latest --activate
 
-```
 
 
 
