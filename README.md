@@ -75,6 +75,7 @@ Prerequisites
 * pnpm
 
 If pnpm is not installed:
+
 corepack enable
 corepack prepare pnpm@latest --activate
 
