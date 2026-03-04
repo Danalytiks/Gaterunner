@@ -46,9 +46,9 @@ If an airport is not configured, the system uses a generic airport profile to es
 
 Connections are classified as:
 
-- SAFE
-- TIGHT
-- RISKY
+- SAFE — connection time comfortably exceeds estimated requirements
+- TIGHT — connection may be possible but with moderate risk
+- RISKY — high probability of missing the connection
 
 ---
 
@@ -59,31 +59,6 @@ Connections are classified as:
 ```bash
 git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
-
-2. Install dependencies
-
-Make sure you have Node.js (LTS) installed.
-Then install the project dependencies:
-pnpm install
-
-3. Run the development server
-pnpm run dev
-
-4. Open the application
-Open your browser and go to:
-http://localhost:3000
-
-Prerequisites
-The following tools must be installed:
-Node.js (LTS)
-pnpm
-
-If pnpm is not installed, run:
-corepack enable
-corepack prepare pnpm@latest --activate
-
-
-
 
 
 
