@@ -93,6 +93,8 @@ If pnpm is not installed, run:
 * corepack enable
 * corepack prepare pnpm@latest --activate
 
+```
+
 
 
 
