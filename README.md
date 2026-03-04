@@ -54,18 +54,22 @@ Connections are classified as:
 
 ## How to run
 
-1. Clone the repository
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/Danalytiks/Gaterunner.git
 cd gaterunner-mvp
 
-2. Install dependencies
+---
+
+### 2. Install dependencies
 Make sure you have Node.js installed.
 - pnpm install
 
-3. Run the development server
+### 3. Run the development server
 - pnpm run dev
 
-4. Open the application
+### 4. Open the application
 Open your browser and go to:
 http://localhost:3000
 
