@@ -62,15 +62,16 @@ Connections are classified as:
 ---
 
 ## Project Structure
-
 ```
 gaterunner-mvp/
-├── client/          # Frontend React application
-├── server/          # Backend services
-├── shared/          # Shared logic and models
-├── patches/         # Configuration patches
-├── package.json
-├── tsconfig.json
+├── client/        # Frontend React application
+├── server/        # Backend logic and API
+├── shared/        # Shared models and configuration
+├── patches/       # Configuration patches
+├── Gaterunner_1.png
+├── Gaterunner_2.png
+├── Gaterunner_3.png
+├── gaterunner.png
 └── README.md
 ```
 
