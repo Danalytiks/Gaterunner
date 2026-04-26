@@ -113,7 +113,7 @@ src/
 
 - [ ] Live flight API integration (AeroDataBox / Lufthansa Open API)
 - [ ] Real-time gate change alerts
-- [ ] Multi-language support (🇬🇧 EN / 🇩🇪 DE / 🇵🇹 PT)
+- [ ] Multi-language support 
 - [ ] Accessibility mode — reduced mobility routing with elevator guidance
 - [ ] Feedback analytics dashboard
 - [ ] Visual airport map with highlighted route
