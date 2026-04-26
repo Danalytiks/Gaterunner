@@ -121,9 +121,9 @@ src/
 
 ---
 
-## 👨‍💻 Author
+## Author
 
-Built by **Dani** — working at Munich Airport (MUC) and passionate about solving real problems with data and design.
+Built by **Daniela Costa Glotzbach** — working at Munich Airport (MUC) and passionate about solving real problems with data and design.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Danalytiks-181717?style=flat&logo=github)](https://github.com/Danalytiks)
 
