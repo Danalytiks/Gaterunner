@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import {
   MapPin, Plane, BarChart2, MessageCircle,
   AlertTriangle, CheckCircle, Clock, XCircle,
-  ArrowRight, ArrowLeft, ChevronDown, Train,
+  ArrowRight, ArrowLeft, ChevronDown, Train, Bus,
   Navigation, Navigation2, Loader2,
 } from "lucide-react";
 
@@ -170,28 +170,36 @@ const AIRPORTS = [
 ];
 
 const PIER_INFO = {
-  A: { terminal: "T1", label: "Terminal 1 · Pier A", color: "#3b82f6" },
-  B: { terminal: "T1", label: "Terminal 1 · Pier B", color: "#3b82f6" },
-  D: { terminal: "T1", label: "Terminal 1 · Pier D", color: "#3b82f6" },
-  E: { terminal: "T1", label: "Terminal 1 · Pier E", color: "#3b82f6" },
-  G: { terminal: "T2", label: "Terminal 2 Main · Pier G", color: "#a855f7" },
-  H: { terminal: "T2", label: "Terminal 2 Main · Pier H", color: "#a855f7" },
-  K: { terminal: "T2S", label: "T2 Satellite · Pier K", color: "#f59e0b" },
-  L: { terminal: "T2S", label: "T2 Satellite · Pier L", color: "#f59e0b" },
+  // Terminal 1 — Ebene 04 (gates), Ebene 03 (arrivals/MAC)
+  A: { terminal: "T1", label: "T1 · Pier A", color: "#3b82f6", gates: "A01–A43", level: "04" },
+  B: { terminal: "T1", label: "T1 · Pier B", color: "#3b82f6", gates: "B01–B17", level: "04" },
+  C: { terminal: "T1", label: "T1 · Pier C", color: "#3b82f6", gates: "C01–C30", level: "04" },
+  D: { terminal: "T1", label: "T1 · Pier D", color: "#3b82f6", gates: "D01–D23", level: "04" },
+  E: { terminal: "T1", label: "T1 · Pier E (VIP Wing)", color: "#3b82f6", gates: "E01–E99", level: "04" },
+  // Terminal 2 Main Building
+  G: { terminal: "T2", label: "T2 Main · Pier G (Lv 04)", color: "#a855f7", gates: "G01–G48", level: "04", connAt: "G19–G28" },
+  H: { terminal: "T2", label: "T2 Main · Pier H (Lv 05)", color: "#a855f7", gates: "H01–H48", level: "05", connAt: "H19–H28" },
+  // Terminal 2 Satellite
+  K: { terminal: "T2S", label: "T2 Satellite · Pier K (Lv 04)", color: "#f59e0b", gates: "K01–K30", level: "04" },
+  L: { terminal: "T2S", label: "T2 Satellite · Pier L (Lv 05)", color: "#f59e0b", gates: "L01–L30", level: "05" },
 };
 
-// Walk times (minutes) — T1: A B D E | T2 Main: G H | T2 Satellite: K L
-// T1 ↔ T2: Sky Link train (every 4 min, ≈ 8 min ride) + walking = ~20 min total
-// T2 Main ↔ T2 Satellite: underground gallery + moving walkways = ~14 min
+// Walk times (minutes) — T1: A B C D E | T2 Main: G H | T2 Satellite: K L
+// T1↔T2: free shuttle bus (5–7 min) every 10 min (07–17h) / 20 min off-peak
+//         OR walk via Munich Airport Center (MAC) — central between Pier B/C
+// Piers B & C are closest to MAC/bus stop; A & E are farthest
+// T2 Main ↔ T2 Satellite: Satellite train every 4 min, ≈ 2 min ride — avg total ≈ 10 min
 const WALK_TIME = {
-  A: { A: 4, B: 10, D: 15, E: 22, G: 32, H: 35, K: 46, L: 50 },
-  B: { A: 10, B: 4, D: 18, E: 25, G: 30, H: 33, K: 44, L: 48 },
-  D: { A: 15, B: 18, D: 4, E: 14, G: 26, H: 29, K: 40, L: 44 },
-  E: { A: 22, B: 25, D: 14, E: 4, G: 28, H: 31, K: 42, L: 46 },
-  G: { A: 32, B: 30, D: 26, E: 28, G: 4, H: 8, K: 14, L: 18 },
-  H: { A: 35, B: 33, D: 29, E: 31, G: 8, H: 4, K: 16, L: 20 },
-  K: { A: 46, B: 44, D: 40, E: 42, G: 14, H: 16, K: 4, L: 8 },
-  L: { A: 50, B: 48, D: 44, E: 46, G: 18, H: 20, K: 8, L: 4 },
+  //      A    B    C    D    E    G    H    K    L
+  A: { A: 4, B: 8, C: 13, D: 18, E: 24, G: 27, H: 30, K: 37, L: 41 },
+  B: { A: 8, B: 4, C: 6, D: 12, E: 18, G: 24, H: 27, K: 34, L: 38 },
+  C: { A: 13, B: 6, C: 4, D: 8, E: 14, G: 23, H: 26, K: 33, L: 37 },
+  D: { A: 18, B: 12, C: 8, D: 4, E: 8, G: 25, H: 28, K: 35, L: 39 },
+  E: { A: 24, B: 18, C: 14, D: 8, E: 4, G: 28, H: 31, K: 38, L: 42 },
+  G: { A: 27, B: 24, C: 23, D: 25, E: 28, G: 4, H: 8, K: 10, L: 14 },
+  H: { A: 30, B: 27, C: 26, D: 28, E: 31, G: 8, H: 4, K: 12, L: 10 },
+  K: { A: 37, B: 34, C: 33, D: 35, E: 38, G: 10, H: 12, K: 4, L: 8 },
+  L: { A: 41, B: 38, C: 37, D: 39, E: 42, G: 14, H: 10, K: 8, L: 4 },
 };
 
 const URGENCY_CONFIG = {
@@ -220,6 +228,29 @@ const URGENCY_CONFIG = {
 // ─────────────────────────────────────────────────────────────────
 const norm = s => (s || "").toUpperCase().replace(/\s/g, "");
 const pier = g => { const p = norm(g).charAt(0); return PIER_INFO[p] ? p : null; };
+const gateNum = g => parseInt(norm(g).slice(1)) || 0;
+
+// Security checkpoint time based on gate position within T2
+// Central gates (G/H 09–38, K/L 04–27): ≈ 4 min | Pier Nord/Süd ends: ≈ 7 min
+function securityTime(g) {
+  const p = pier(g);
+  if (!p || PIER_INFO[p].terminal === "T1") return 0;
+  const n = gateNum(g);
+  if (p === "G" || p === "H") return (n >= 9 && n <= 38) ? 4 : 7;
+  if (p === "K" || p === "L") return (n >= 4 && n <= 27) ? 4 : 7;
+  return 5;
+}
+
+// T2 Main: walk from entry (center, G/H 19-28) to gate
+// Each ~10 gate numbers = ~3 min walk along the pier
+function pierWalkTime(g) {
+  const p = pier(g);
+  if (!p || PIER_INFO[p].terminal !== "T2") return 0;
+  const n = gateNum(g);
+  const distFromCenter = Math.abs(n - 24); // center ≈ gate 24
+  return Math.round((distFromCenter / 10) * 3) + 2;
+}
+
 const fmtMin = m => {
   if (!m && m !== 0) return "—";
   if (m < 60) return `${m} min`;
@@ -257,9 +288,9 @@ function buildDirections(fromGate, toGate) {
 
   // T1 → T1
   if (fi.terminal === "T1" && ti.terminal === "T1") {
-    steps.push({ icon: "walk", text: "After deplaning, follow the main Terminal 1 corridor.", mins: 5 });
-    steps.push({ icon: "sign", text: `Follow the blue overhead signs for "Pier ${tp}".`, mins: 8 });
-    steps.push({ icon: "gate", text: `Gate ${dest} will be signposted along the pier corridor.`, mins: 4 });
+    steps.push({ icon: "walk", text: `After deplaning at Pier ${fp}, follow the Level 04 corridor toward Pier ${tp}.`, mins: 5 });
+    steps.push({ icon: "sign", text: `Follow the overhead signs for "Pier ${tp}" — the MAC (Munich Airport Center) connects all T1 piers at ground level.`, mins: 8 });
+    steps.push({ icon: "gate", text: `Gate ${dest} is signposted along Pier ${tp}.`, mins: 4 });
     return steps;
   }
 
@@ -273,54 +304,70 @@ function buildDirections(fromGate, toGate) {
 
   // T2 Main → T2 Satellite (G/H → K/L)
   if (fi.terminal === "T2" && ti.terminal === "T2S") {
-    steps.push({ icon: "walk", text: "In the T2 Main Building, follow 'Satellite' signs down to the lower level.", mins: 4 });
-    steps.push({ icon: "train", text: "Board the Satellite train — runs every 4 min, ≈ 8 min ride to the Satellite Building.", mins: 10 });
-    steps.push({ icon: "gate", text: `In the T2 Satellite Building, follow signs to Gate ${dest}.`, mins: 4 });
+    const fromLevel = fp === "G" ? "04" : "05";
+    const toLevel = tp === "K" ? "04" : "05";
+    const sameLevel = fromLevel === toLevel;
+    steps.push({ icon: "walk", text: `In T2 Main Building (Level ${fromLevel}), walk toward the center and follow signs to the Satellite train station — look for 'Zugang zu Gates ${tp}' (Access to Gates ${tp}).`, mins: 4 });
+    if (!sameLevel) {
+      steps.push({ icon: "walk", text: `Take the escalators to Level ${toLevel} to connect to the Satellite train for Pier ${tp}.`, mins: 2 });
+    }
+    steps.push({ icon: "train", text: `Board the Satellite train at the center of T2 Main — runs every 4 min, ≈ 2 min ride to the Satellite Building.`, mins: 4 });
+    steps.push({ icon: "sign", text: `In T2 Satellite Building (Level ${toLevel}), follow signs for Pier ${tp}.`, mins: 3 });
+    steps.push({ icon: "gate", text: `Gate ${dest} is signposted along the pier.`, mins: 2 });
     return steps;
   }
 
   // T2 Satellite → T2 Main (K/L → G/H)
   if (fi.terminal === "T2S" && ti.terminal === "T2") {
-    steps.push({ icon: "train", text: "Take the Satellite train back to the T2 Main Building — runs every 4 min, ≈ 8 min ride.", mins: 10 });
-    steps.push({ icon: "sign", text: `In T2 Main Building, follow overhead signs for Pier ${tp}.`, mins: 5 });
+    const fromLevel = fp === "K" ? "04" : "05";
+    const toLevel = tp === "G" ? "04" : "05";
+    const sameLevel = fromLevel === toLevel;
+    steps.push({ icon: "walk", text: `In T2 Satellite Building (Level ${fromLevel}), follow signs to the train station — look for 'Zugang zu Gates ${tp}' (Access to Gates ${tp}).`, mins: 3 });
+    steps.push({ icon: "train", text: "Take the Satellite train back to T2 Main Building — runs every 4 min, ≈ 2 min ride.", mins: 4 });
+    if (!sameLevel) {
+      steps.push({ icon: "walk", text: `Take the escalators to Level ${toLevel} for Pier ${tp}.`, mins: 2 });
+    }
+    steps.push({ icon: "sign", text: `In T2 Main Building, follow overhead signs for Pier ${tp} (Level ${toLevel}).`, mins: 4 });
     steps.push({ icon: "gate", text: `Gate ${dest} is indicated along the pier.`, mins: 2 });
     return steps;
   }
 
   // T1 → T2 Main
   if (fi.terminal === "T1" && ti.terminal === "T2") {
-    steps.push({ icon: "walk", text: "After deplaning, follow signs to the 'Sky Link' station (Level 04, T1).", mins: 5 });
-    steps.push({ icon: "train", text: "Board the free Sky Link train toward Terminal 2. Runs every 4 min, ≈ 8 min ride.", mins: 11 });
-    steps.push({ icon: "sign", text: `In T2 Main Building, follow overhead signs for Pier ${tp}.`, mins: 7 });
+    steps.push({ icon: "walk", text: `From Pier ${fp}, head to the center of T1 (between Pier B and C) — follow signs to the Bus Stop or MAC (Munich Airport Center).`, mins: 5 });
+    steps.push({ icon: "bus", text: "Board the free shuttle bus to Terminal 2 — 5–7 min ride. Every 10 min (07:00–17:00), every 20 min outside these hours. Alternative: walk through the MAC (≈ 10 min on foot).", mins: 10 });
+    steps.push({ icon: "sign", text: `In T2 Main Building, follow overhead signs for Pier ${tp} (Level ${PIER_INFO[tp]?.level}).`, mins: 7 });
     steps.push({ icon: "gate", text: `Gate ${dest} is signposted at the pier.`, mins: 3 });
     return steps;
   }
 
   // T1 → T2 Satellite
   if (fi.terminal === "T1" && ti.terminal === "T2S") {
-    steps.push({ icon: "walk", text: "After deplaning, follow signs to the 'Sky Link' station (Level 04, T1).", mins: 5 });
-    steps.push({ icon: "train", text: "Board the free Sky Link train toward Terminal 2. Runs every 4 min, ≈ 8 min ride.", mins: 11 });
-    steps.push({ icon: "sign", text: "On arrival at T2 Main, immediately follow 'Satellite' signs to the lower level.", mins: 4 });
-    steps.push({ icon: "train", text: "Board the Satellite train — runs every 4 min, ≈ 8 min ride.", mins: 10 });
+    steps.push({ icon: "walk", text: `From Pier ${fp}, head to the center of T1 (between Pier B and C) — follow signs to the Bus Stop or MAC.`, mins: 5 });
+    steps.push({ icon: "bus", text: "Board the free shuttle bus to Terminal 2 — 5–7 min ride. Every 10 min (07:00–17:00), every 20 min outside these hours.", mins: 10 });
+    steps.push({ icon: "walk", text: "In T2 Main Building, follow signs to the Satellite train station — look for 'Zugang zu Gates K/L' (Access to Gates K/L).", mins: 4 });
+    steps.push({ icon: "train", text: "Board the Satellite train — runs every 4 min, ≈ 2 min ride to the Satellite Building.", mins: 4 });
     steps.push({ icon: "gate", text: `Gate ${dest} is indicated in the T2 Satellite Building.`, mins: 3 });
     return steps;
   }
 
   // T2 Main → T1
   if (fi.terminal === "T2" && ti.terminal === "T1") {
-    steps.push({ icon: "walk", text: "In T2 Main Building, follow signs to the 'Sky Link' station (Level 04).", mins: 6 });
-    steps.push({ icon: "train", text: "Board the free Sky Link train toward Terminal 1. Runs every 4 min, ≈ 8 min ride.", mins: 11 });
-    steps.push({ icon: "sign", text: `In Terminal 1, follow blue overhead signs for Pier ${tp}.`, mins: 8 });
+    steps.push({ icon: "walk", text: "In T2 Main Building, go to ground level and follow signs to the 'Bus Stop' for Terminal 1.", mins: 5 });
+    steps.push({ icon: "bus", text: "Board the free shuttle bus to Terminal 1 — 5–7 min ride. Every 10 min (07:00–17:00), every 20 min outside these hours. Alternative: walk through the MAC.", mins: 10 });
+    steps.push({ icon: "walk", text: `In Terminal 1, the MAC connects all piers. Head toward Pier ${tp}.`, mins: 5 });
+    steps.push({ icon: "sign", text: `Follow overhead signs for Pier ${tp} and take escalators to Level 04.`, mins: 5 });
     steps.push({ icon: "gate", text: `Gate ${dest} is signposted along the pier.`, mins: 3 });
     return steps;
   }
 
   // T2 Satellite → T1
   if (fi.terminal === "T2S" && ti.terminal === "T1") {
-    steps.push({ icon: "train", text: "Take the Satellite train back to T2 Main Building — runs every 4 min, ≈ 8 min ride.", mins: 10 });
-    steps.push({ icon: "walk", text: "In T2 Main, follow signs to the 'Sky Link' station (Level 04).", mins: 6 });
-    steps.push({ icon: "train", text: "Board the free Sky Link train toward Terminal 1. Runs every 4 min, ≈ 8 min ride.", mins: 11 });
-    steps.push({ icon: "sign", text: `In Terminal 1, follow blue overhead signs for Pier ${tp}.`, mins: 8 });
+    steps.push({ icon: "train", text: "Take the Satellite train back to T2 Main Building — runs every 4 min, ≈ 2 min ride.", mins: 4 });
+    steps.push({ icon: "walk", text: "In T2 Main Building, go to ground level and follow signs to the 'Bus Stop' for Terminal 1.", mins: 5 });
+    steps.push({ icon: "bus", text: "Board the free shuttle bus to Terminal 1 — 5–7 min ride. Every 10 min (07:00–17:00), every 20 min outside these hours.", mins: 10 });
+    steps.push({ icon: "walk", text: `In Terminal 1, the MAC connects all piers. Head toward Pier ${tp}.`, mins: 5 });
+    steps.push({ icon: "sign", text: `Follow overhead signs for Pier ${tp} and take escalators to Level 04.`, mins: 5 });
     steps.push({ icon: "gate", text: `Gate ${dest} is signposted along the pier.`, mins: 3 });
     return steps;
   }
@@ -334,6 +381,7 @@ function buildDirections(fromGate, toGate) {
 function StepIcon({ type, color }) {
   const s = { width: 16, height: 16, color, flexShrink: 0 };
   if (type === "train") return <Train style={s} />;
+  if (type === "bus") return <Bus style={s} />;
   if (type === "gate") return <MapPin style={s} />;
   if (type === "sign") return <Navigation2 style={s} />;
   return <Navigation style={s} />;
@@ -429,8 +477,9 @@ function DirectionsScreen({ result, onBack }) {
           {/* Metrics row */}
           <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
             {[
-              { label: "Walk time", value: fmtMin(result.walkTime), hi: false },
-              { label: "Time available", value: fmtMin(result.available), hi: false },
+              { label: "Walk time", value: fmtMin(result.walkTime) },
+              ...(result.securityTime > 0 ? [{ label: "Security", value: `+${result.securityTime} min` }] : []),
+              { label: "Time available", value: fmtMin(result.available) },
               {
                 label: "Buffer",
                 value: result.buffer >= 0 ? `+${fmtMin(result.buffer)}` : `-${fmtMin(Math.abs(result.buffer))}`,
@@ -595,11 +644,15 @@ function MainScreen({ onHowToGo }) {
     if (!canCheck) { setShake(true); setTimeout(() => setShake(false), 600); return; }
     setLoading(true);
     setResult(null);
-    // Simulate slight async lookup (real API call goes here)
     setTimeout(() => {
+      const secTime = securityTime(gate); // extra time if security needed at dep gate
       const directions = buildDirections(arrInfo.arrGate, gate);
+      const effectiveWalk = walkTime + secTime;
+      const buf = available - effectiveWalk;
+      const urg = calcUrgency(buf);
       setResult({
-        urgency, walkTime, available, buffer,
+        urgency: urg, walkTime, securityTime: secTime,
+        effectiveWalk, available, buffer: buf,
         directions,
         arrGate: arrInfo.arrGate,
         depGate: norm(gate),
