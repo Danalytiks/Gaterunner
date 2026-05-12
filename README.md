@@ -21,6 +21,22 @@ Often the time **is** sufficient — but passengers don't know the route and mis
 
 ---
 
+## 📊 Data-Driven Risk Classification
+
+The Safe / Tight / Risky thresholds used in GateRunner are not arbitrary — they are validated by a data analysis of **10 million US domestic flights (2024)**.
+
+> 🔬 **[See the full analysis →](https://github.com/Danalytiks/flight-delay-connection-risk-analysis)**
+
+Key finding: **~1 in 5 flights** lands in a Tight or Risky connection scenario, confirming the real-world need for GateRunner.
+
+| Status | Buffer | Share of flights |
+|---|---|---|
+| 🟢 Safe | > 20 min | 77.96% |
+| 🟡 Tight | 5–20 min | 12.83% |
+| 🔴 Risky | < 5 min | 7.57% |
+
+---
+
 ## 🚀 What It Does
 
 1. **Enter your flight numbers** — incoming + connecting (flight-number based, not gate-based)
@@ -62,21 +78,13 @@ Using flight numbers unlocks richer context than a gate alone:
 - ✅ Destination airport code
 - 🔜 Future: real-time delays, gate changes, airline alerts
 
-A gate number alone tells you nothing.
-
 ---
 
-## 🧮 Risk Classification
+## 🧮 Risk Classification Logic
 
-The app calculates a **buffer** (time available minus walking time + security time):
+Buffer = time available − walking time − security time
 
-| Status | Buffer | Behaviour |
-|---|---|---|
-| 🟢 **Safe** | > 20 min | Relaxed pace |
-| 🟡 **Tight** | 5–20 min | Go directly, no stops |
-| 🔴 **Risky** | < 5 min | Alert crew immediately |
-
-Security time is factored in based on gate position within the pier:
+Security time is factored in based on gate position:
 - Central gates (G/H 09–38, K/L 04–27): **+4 min**
 - Pier Nord / Pier Süd gates: **+7 min**
 
@@ -89,7 +97,7 @@ Security time is factored in based on gate position within the pier:
 | Framework | React + Vite |
 | Icons | Lucide React |
 | Styling | CSS-in-JS (inline + injected keyframes) |
-| Data | Calibrated MUC walking time matrix (mock flight DB → live API in roadmap) |
+| Airport Data | Calibrated MUC walking time matrix (private) |
 | Deploy | Vercel |
 
 ---
@@ -105,7 +113,7 @@ src/
     └── mucData.js        # 🔒 Pier graph + walking time matrix (private)
 ```
 
-> The core data layer (calibrated walking time matrix, pier graph, and directions logic) is intentionally kept private and will be replaced by a live flight API in production.
+> The core data layer is intentionally kept private and will be replaced by a live flight API in production.
 
 ---
 
@@ -113,7 +121,7 @@ src/
 
 - [ ] Live flight API integration (AeroDataBox / Lufthansa Open API)
 - [ ] Real-time gate change alerts
-- [ ] Multi-language support 
+- [ ] Multi-language support (🇬🇧 EN / 🇩🇪 DE / 🇵🇹 PT)
 - [ ] Accessibility mode — reduced mobility routing with elevator guidance
 - [ ] Feedback analytics dashboard
 - [ ] Visual airport map with highlighted route
@@ -121,9 +129,9 @@ src/
 
 ---
 
-## Author
+## 👨‍💻 Author
 
-Built by **Daniela Costa Glotzbach** — working at Munich Airport (MUC) and passionate about solving real problems with data and design.
+Built by **Dani** — working at Munich Airport (MUC) and passionate about solving real problems with data and design.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Danalytiks-181717?style=flat&logo=github)](https://github.com/Danalytiks)
 
