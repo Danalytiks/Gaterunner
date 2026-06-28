@@ -15,104 +15,109 @@ import {
 // ─────────────────────────────────────────────────────────────────
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',sans-serif; }
 
   @keyframes fadeSlideUp {
-    from { opacity:0; transform:translateY(16px); }
-    to   { opacity:1; transform:translateY(0); }
+    from{opacity:0;transform:translateY(16px)}
+    to{opacity:1;transform:translateY(0)}
   }
-  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-  @keyframes spin   { to{transform:rotate(360deg)} }
-  @keyframes dash {
-    from { stroke-dashoffset: 900; }
-    to   { stroke-dashoffset: 0; }
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drawRoute{
+    from{stroke-dashoffset:1200}
+    to{stroke-dashoffset:0}
   }
-  @keyframes pulse {
-    0%,100% { transform:scale(1); opacity:1; }
-    50%      { transform:scale(1.35); opacity:.7; }
+  @keyframes pinPop{
+    0%{transform:scale(0);opacity:0}
+    70%{transform:scale(1.2);opacity:1}
+    100%{transform:scale(1)}
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.4;r:12}
+    50%{opacity:.15;r:18}
   }
 
-  .animate-up   { animation: fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) both; }
-  .animate-up-2 { animation: fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) .08s both; }
-  .animate-up-3 { animation: fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) .16s both; }
-  .animate-fade { animation: fadeIn .35s ease both; }
-  .spin         { animation: spin .8s linear infinite; }
+  .animate-up   {animation:fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) both}
+  .animate-up-2 {animation:fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) .08s both}
+  .animate-up-3 {animation:fadeSlideUp .4s cubic-bezier(.22,.68,0,1.2) .16s both}
+  .animate-fade {animation:fadeIn .35s ease both}
+  .spin         {animation:spin .8s linear infinite}
+  .route-line   {stroke-dasharray:1200;animation:drawRoute 1.2s cubic-bezier(.4,0,.2,1) .4s both}
+  .pin-pop      {animation:pinPop .4s cubic-bezier(.22,.68,0,1.2) .8s both;transform-origin:center}
+  .pin-pulse    {animation:pulse 2s ease-in-out infinite}
 
-  .route-path   { stroke-dasharray:900; animation: dash 1.4s cubic-bezier(.4,0,.2,1) .3s both; }
-  .gate-pulse   { animation: pulse 2s ease-in-out infinite; }
-
-  .btn-primary {
-    background:#2563eb; color:white; border:none; border-radius:9px;
-    padding:11px 24px; font-size:15px; font-weight:700; cursor:pointer;
-    transition:background .18s,transform .12s,box-shadow .18s; font-family:inherit;
+  .btn-primary{
+    background:#2563eb;color:white;border:none;border-radius:9px;
+    padding:11px 24px;font-size:15px;font-weight:700;cursor:pointer;
+    transition:background .18s,transform .12s,box-shadow .18s;font-family:inherit;
   }
-  .btn-primary:hover:not(:disabled) { background:#1d4ed8; box-shadow:0 4px 14px rgba(37,99,235,.35); }
-  .btn-primary:active:not(:disabled){ transform:scale(.97); }
-  .btn-primary:disabled              { background:#bfdbfe; cursor:not-allowed; }
+  .btn-primary:hover:not(:disabled){background:#1d4ed8;box-shadow:0 4px 14px rgba(37,99,235,.35)}
+  .btn-primary:active:not(:disabled){transform:scale(.97)}
+  .btn-primary:disabled{background:#bfdbfe;cursor:not-allowed}
 
-  .btn-outline {
-    background:transparent; border-radius:9px; padding:9px 16px;
-    font-size:13px; font-weight:700; cursor:pointer;
-    display:flex; align-items:center; gap:6px; white-space:nowrap;
-    transition:background .15s,transform .12s; font-family:inherit;
+  .btn-outline{
+    background:transparent;border-radius:9px;padding:9px 16px;
+    font-size:13px;font-weight:700;cursor:pointer;
+    display:flex;align-items:center;gap:6px;white-space:nowrap;
+    transition:background .15s,transform .12s;font-family:inherit;
   }
-  .btn-outline:hover  { filter:brightness(.93); }
-  .btn-outline:active { transform:scale(.96); }
+  .btn-outline:hover{filter:brightness(.93)}
+  .btn-outline:active{transform:scale(.96)}
 
-  .btn-back {
-    display:flex; align-items:center; gap:6px;
-    background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
-    border-radius:20px; padding:7px 16px; color:white;
-    font-size:14px; font-weight:600; cursor:pointer; margin-bottom:16px;
-    transition:background .15s; font-family:inherit;
+  .btn-back{
+    display:flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+    border-radius:20px;padding:7px 16px;color:white;
+    font-size:14px;font-weight:600;cursor:pointer;margin-bottom:16px;
+    transition:background .15s;font-family:inherit;
   }
-  .btn-back:hover { background:rgba(255,255,255,.25); }
+  .btn-back:hover{background:rgba(255,255,255,.25)}
 
-  .field-input {
-    width:100%; border:1.5px solid #d1d5db; border-radius:9px;
-    padding:11px 13px; font-size:15px; font-weight:600; color:#111;
-    outline:none; background:white; font-family:'Inter',inherit;
-    transition:border-color .15s,box-shadow .15s; text-transform:uppercase;
+  .field-input{
+    width:100%;border:1.5px solid #d1d5db;border-radius:9px;
+    padding:11px 13px;font-size:15px;font-weight:600;color:#111;
+    outline:none;background:white;font-family:'Inter',inherit;
+    transition:border-color .15s,box-shadow .15s;text-transform:uppercase;
   }
-  .field-input::placeholder { color:#9ca3af; font-weight:400; text-transform:none; }
-  .field-input:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.12); }
-  .field-input.valid { border-color:#86efac; }
-  .field-input.error { border-color:#fca5a5; }
+  .field-input::placeholder{color:#9ca3af;font-weight:400;text-transform:none}
+  .field-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .field-input.valid{border-color:#86efac}
+  .field-input.error{border-color:#fca5a5}
 
-  .select-input {
-    width:100%; border:1.5px solid #d1d5db; border-radius:9px;
-    padding:11px 36px 11px 13px; font-size:15px; font-weight:600;
-    color:#111; outline:none; background:white;
-    font-family:'Inter',inherit; appearance:none; cursor:pointer;
+  .select-input{
+    width:100%;border:1.5px solid #d1d5db;border-radius:9px;
+    padding:11px 36px 11px 13px;font-size:15px;font-weight:600;
+    color:#111;outline:none;background:white;
+    font-family:'Inter',inherit;appearance:none;cursor:pointer;
     transition:border-color .15s,box-shadow .15s;
   }
-  .select-input:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.12); }
+  .select-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
 
-  .card {
-    background:white; border-radius:14px; border:1px solid #e5e7eb;
-    padding:20px; margin-bottom:14px; box-shadow:0 1px 6px rgba(0,0,0,.05);
+  .card{
+    background:white;border-radius:14px;border:1px solid #e5e7eb;
+    padding:20px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.05);
   }
-  .result-card {
-    border-radius:11px; padding:15px 16px; display:flex; align-items:center;
-    justify-content:space-between; gap:12px;
-    border-left-width:4px; border-left-style:solid;
+  .result-card{
+    border-radius:11px;padding:15px 16px;display:flex;align-items:center;
+    justify-content:space-between;gap:12px;
+    border-left-width:4px;border-left-style:solid;
   }
-  .feedback-btn {
-    border-radius:9px; padding:11px 8px; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; gap:6px;
-    transition:transform .12s,box-shadow .15s; font-family:inherit;
+  .feedback-btn{
+    border-radius:9px;padding:11px 8px;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    transition:transform .12s,box-shadow .15s;font-family:inherit;
   }
-  .feedback-btn:hover  { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.1); }
-  .feedback-btn:active { transform:scale(.96); }
-  .step-row {
-    display:flex; gap:14px; margin-bottom:22px;
-    position:relative; z-index:1; animation:fadeSlideUp .35s ease both;
+  .feedback-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+  .feedback-btn:active{transform:scale(.96)}
+  .step-row{
+    display:flex;gap:14px;margin-bottom:22px;
+    position:relative;z-index:1;animation:fadeSlideUp .35s ease both;
   }
-  .hint-chip {
-    display:inline-flex; align-items:center; gap:4px;
-    font-size:11px; font-weight:600; padding:3px 8px;
-    border-radius:20px; margin-top:5px;
+  .hint-chip{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:11px;font-weight:600;padding:3px 8px;
+    border-radius:20px;margin-top:5px;
   }
 `;
 
@@ -150,240 +155,352 @@ const fmtMinLong = m => {
 const calcUrgency = buf => buf > 20 ? "safe" : buf > 5 ? "tight" : "risky";
 
 // ─────────────────────────────────────────────────────────────────
-//  Airport Map SVG
+//  Airport Map — styled to match mockup
 // ─────────────────────────────────────────────────────────────────
 
-// Gate → approximate SVG coordinate on the airport diagram
-// ViewBox: 0 0 820 240
-const GATE_COORD = g => {
+// Gate → pixel coordinate in the SVG (760×380 viewBox)
+// T1 piers on the LEFT side, T2 / Satellite on the RIGHT
+function gateCoord(g) {
   const p = pier(g);
   const n = parseInt(norm(g).slice(1)) || 1;
-  if (!p) return { x: 400, y: 120 };
+  if (!p) return { x: 380, y: 190 };
+  // T1 piers — finger piers extend UPWARD from concourse at y≈230
+  if (p === "E") return { x: 52, y: 80 + (Math.min(n, 99) / 99) * 130 };
+  if (p === "D") return { x: 102, y: 65 + (Math.min(n, 23) / 23) * 145 };
+  if (p === "C") return { x: 152, y: 60 + (Math.min(n, 30) / 30) * 150 };
+  if (p === "B") return { x: 202, y: 65 + (Math.min(n, 17) / 17) * 145 };
+  if (p === "A") return { x: 252, y: 75 + (Math.min(n, 43) / 43) * 135 };
+  // T2 Main — G is lower (Lv04), H is upper (Lv05)
+  if (p === "G") return { x: 390 + (Math.min(n, 48) / 48) * 185, y: 268 };
+  if (p === "H") return { x: 390 + (Math.min(n, 48) / 48) * 185, y: 170 };
+  // T2 Satellite — K lower, L upper
+  if (p === "K") return { x: 655 + (Math.min(n, 30) / 30) * 80, y: 268 };
+  if (p === "L") return { x: 655 + (Math.min(n, 30) / 30) * 80, y: 170 };
+  return { x: 380, y: 190 };
+}
 
-  // T1 building spans x=30–290, y=60–180
-  // Piers left→right: E D C B A
-  const T1_PIERS = { E: 55, D: 105, C: 155, B: 205, A: 255 };
-  if (p === "E") return { x: T1_PIERS.E, y: 110 };
-  if (p === "D") return { x: T1_PIERS.D, y: 75 + (n / 23) * 90 };
-  if (p === "C") return { x: T1_PIERS.C, y: 75 + (n / 30) * 90 };
-  if (p === "B") return { x: T1_PIERS.B, y: 75 + (n / 17) * 90 };
-  if (p === "A") return { x: T1_PIERS.A, y: 75 + (n / 43) * 90 };
-
-  // T2 Main building spans x=390–600, y=60–180
-  // G = lower half (lv04), H = upper half (lv05)
-  if (p === "G") return { x: 395 + (n / 48) * 195, y: 155 };
-  if (p === "H") return { x: 395 + (n / 48) * 195, y: 75 };
-
-  // T2 Satellite spans x=660–800, y=60–180
-  if (p === "K") return { x: 665 + (n / 30) * 130, y: 155 };
-  if (p === "L") return { x: 665 + (n / 30) * 130, y: 75 };
-
-  return { x: 400, y: 120 };
-};
-
-// Build waypoints for the route path between two gates
-const routeWaypoints = (fromGate, toGate) => {
-  const fp = pier(fromGate), tp = pier(toGate);
-  if (!fp || !tp) return [];
+function buildWaypoints(arrGate, depGate) {
+  const fp = pier(arrGate), tp = pier(depGate);
+  if (!fp || !tp) return [gateCoord(arrGate), gateCoord(depGate)];
   const fi = PIER_INFO[fp], ti = PIER_INFO[tp];
-  const from = GATE_COORD(fromGate);
-  const to = GATE_COORD(toGate);
+  const from = gateCoord(arrGate);
+  const to = gateCoord(depGate);
   const pts = [from];
+  const CONC = 232; // T1 concourse y
+  const CONC2 = 232; // T2 concourse y (same level)
+  const MAC_X = 330; // MAC/bus connection x
+  const SAT_X = 628; // Satellite train x
 
-  if (fi.terminal === ti.terminal && (fi.terminal !== "T2" || fp === tp || (fp === "G" && tp === "G") || (fp === "H" && tp === "H"))) {
-    // Same building — go via corridor center y
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: to.x, y: 120 });
-  } else if (fi.terminal === "T1" && ti.terminal === "T1") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+  if (fi.terminal === "T1" && ti.terminal === "T1") {
+    pts.push({ x: from.x, y: CONC });
+    pts.push({ x: to.x, y: CONC });
   } else if (fi.terminal === "T2" && ti.terminal === "T2") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC2 });
+    pts.push({ x: to.x, y: CONC2 });
   } else if (fi.terminal === "T2" && ti.terminal === "T2S") {
-    // T2 → train station (x=625) → Satellite
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 625, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC2 });
+    pts.push({ x: SAT_X, y: CONC2 });
   } else if (fi.terminal === "T2S" && ti.terminal === "T2") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 625, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC2 });
+    pts.push({ x: SAT_X, y: CONC2 });
+    pts.push({ x: to.x, y: CONC2 });
   } else if (fi.terminal === "T1" && ti.terminal === "T2") {
-    // T1 → MAC (x=335) → T2
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 335, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC });
+    pts.push({ x: MAC_X, y: CONC });
+    pts.push({ x: to.x, y: CONC2 });
   } else if (fi.terminal === "T1" && ti.terminal === "T2S") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 335, y: 120 });
-    pts.push({ x: 625, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC });
+    pts.push({ x: MAC_X, y: CONC });
+    pts.push({ x: SAT_X, y: CONC2 });
   } else if (fi.terminal === "T2" && ti.terminal === "T1") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 335, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC2 });
+    pts.push({ x: MAC_X, y: CONC });
+    pts.push({ x: to.x, y: CONC });
   } else if (fi.terminal === "T2S" && ti.terminal === "T1") {
-    pts.push({ x: from.x, y: 120 });
-    pts.push({ x: 625, y: 120 });
-    pts.push({ x: 335, y: 120 });
-    pts.push({ x: to.x, y: 120 });
+    pts.push({ x: from.x, y: CONC2 });
+    pts.push({ x: SAT_X, y: CONC2 });
+    pts.push({ x: MAC_X, y: CONC });
+    pts.push({ x: to.x, y: CONC });
   }
-
   pts.push(to);
   return pts;
-};
-
-const ptsToD = pts =>
-  pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+}
 
 function AirportMap({ arrGate, depGate, urgency, walkTime, available }) {
-  const u = URGENCY_CONFIG[urgency];
-  const from = GATE_COORD(arrGate);
-  const to = GATE_COORD(depGate);
-  const wpts = routeWaypoints(arrGate, depGate);
+  const u = URGENCY_CONFIG[urgency] || URGENCY_CONFIG.tight;
+  const from = gateCoord(arrGate);
+  const to = gateCoord(depGate);
+  const wpts = buildWaypoints(arrGate, depGate);
+  const pathD = wpts.map((p, i) => `${i === 0 ? "M" : "L"} ${Math.round(p.x)} ${Math.round(p.y)}`).join(" ");
+  const pinColor = u.leftBar;
 
   return (
-    <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #e5e7eb", background: "#f0f4ff" }}>
-      <svg
-        viewBox="0 0 820 240"
-        style={{ width: "100%", display: "block" }}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Sky gradient background */}
+    <div style={{
+      borderRadius: 12, overflow: "hidden",
+      border: "1px solid #c8d8e8",
+      boxShadow: "0 2px 12px rgba(30,60,120,.1)",
+    }}>
+      <svg viewBox="0 0 760 380" style={{ width: "100%", display: "block" }}
+        xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#dbeafe" />
-            <stop offset="100%" stopColor="#eff6ff" />
+          <linearGradient id="mapbg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#c0d4ec" />
+            <stop offset="100%" stopColor="#d8e8f6" />
           </linearGradient>
-          <filter id="shadow">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#1e3a8a" floodOpacity="0.15" />
+          <filter id="bshadow">
+            <feDropShadow dx="1" dy="2" stdDeviation="3" floodColor="#7090b0" floodOpacity=".35" />
           </filter>
+          <filter id="pshadow">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity=".3" />
+          </filter>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#1a6fe8" />
+          </marker>
         </defs>
-        <rect width="820" height="240" fill="url(#skyGrad)" />
 
-        {/* ── Ground / taxiway ── */}
-        <rect x="0" y="195" width="820" height="45" fill="#e2e8f0" />
-        {/* Taxiway lines */}
-        <line x1="0" y1="210" x2="820" y2="210" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="20 10" />
+        {/* ── Background ── */}
+        <rect width="760" height="380" fill="url(#mapbg)" />
 
-        {/* ── MAC road / bus lane (between T1 and T2) ── */}
-        <rect x="298" y="50" width="80" height="145" rx="4" fill="#cbd5e1" opacity=".6" />
-        <text x="338" y="130" textAnchor="middle" fontSize="9" fill="#64748b" fontWeight="700">MAC</text>
-        <text x="338" y="142" textAnchor="middle" fontSize="8" fill="#94a3b8">Bus Stop</text>
-        {/* bus icon area */}
-        <rect x="314" y="148" width="48" height="20" rx="4" fill="#94a3b8" opacity=".4" />
-        <text x="338" y="162" textAnchor="middle" fontSize="9" fill="#475569">🚌</text>
+        {/* Subtle map grid */}
+        {[...Array(9)].map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={i * 46} x2="760" y2={i * 46}
+            stroke="#b0c8e0" strokeWidth="0.4" opacity="0.6" />
+        ))}
+        {[...Array(16)].map((_, i) => (
+          <line key={`v${i}`} x1={i * 50} y1="0" x2={i * 50} y2="380"
+            stroke="#b0c8e0" strokeWidth="0.4" opacity="0.6" />
+        ))}
 
-        {/* ── Satellite train track ── */}
-        <rect x="620" y="105" width="40" height="30" rx="4" fill="#fde68a" opacity=".8" />
-        <text x="640" y="124" textAnchor="middle" fontSize="8" fill="#92400e" fontWeight="700">🚆</text>
+        {/* ── Taxiways at bottom ── */}
+        <rect x="0" y="310" width="760" height="35" rx="0" fill="#adc0d4" opacity=".7" />
+        <rect x="0" y="320" width="760" height="3" fill="#98b0c4" opacity=".9" />
+        <rect x="0" y="328" width="760" height="3" fill="#98b0c4" opacity=".6" />
 
-        {/* ══ T1 Building ══ */}
-        <rect x="28" y="52" width="258" height="140" rx="8" fill="#1e40af" filter="url(#shadow)" opacity=".9" />
-        <rect x="30" y="54" width="254" height="136" rx="7" fill="#2563eb" />
-        {/* T1 roof highlight */}
-        <rect x="30" y="54" width="254" height="18" rx="7" fill="#3b82f6" />
-        <text x="157" y="66" textAnchor="middle" fontSize="10" fill="white" fontWeight="800" opacity=".9">TERMINAL 1</text>
+        {/* ── MAC / Bus connection road ── */}
+        <rect x="285" y="115" width="75" height="197" fill="#a8bcd0" opacity=".65" />
+        {/* Road markings */}
+        {[0, 1, 2, 3, 4].map(i => (
+          <rect key={i} x="319" y={128 + i * 32} width="5" height="18" rx="2"
+            fill="white" opacity=".5" />
+        ))}
+        {/* MAC label box */}
+        <rect x="289" y="196" width="67" height="40" rx="6"
+          fill="white" opacity=".88" filter="url(#bshadow)" />
+        <text x="322" y="212" textAnchor="middle" fontSize="9" fill="#4a6a8a" fontWeight="800">MAC</text>
+        <text x="322" y="226" textAnchor="middle" fontSize="8" fill="#7a9ab8">🚌 Bus Stop</text>
 
-        {/* T1 pier labels */}
+        {/* ── Satellite train station ── */}
+        <rect x="618" y="195" width="36" height="45" rx="5"
+          fill="#fde68a" opacity=".85" filter="url(#bshadow)" />
+        <text x="636" y="221" textAnchor="middle" fontSize="11">🚆</text>
+
+        {/* ══════════════════════════════════
+             TERMINAL 1  (left side)
+        ══════════════════════════════════ */}
+
+        {/* T1 Main concourse */}
+        <rect x="25" y="218" width="253" height="42" rx="7"
+          fill="white" stroke="#c0d4e8" strokeWidth="1" filter="url(#bshadow)" />
+        {/* concourse roof line */}
+        <rect x="25" y="218" width="253" height="11" rx="7" fill="#eaf1fb" />
+        <rect x="25" y="225" width="253" height="4" fill="#dce8f8" />
+
+        {/* T1 Finger piers — 5 piers pointing UP */}
         {[
-          { letter: "E", cx: 55 },
-          { letter: "D", cx: 105 },
-          { letter: "C", cx: 155 },
-          { letter: "B", cx: 205 },
-          { letter: "A", cx: 255 },
-        ].map(pr => (
-          <g key={pr.letter}>
-            <rect x={pr.cx - 14} y="78" width="28" height="100" rx="4" fill="#1d4ed8" opacity=".6" />
-            <text x={pr.cx} y="135" textAnchor="middle" fontSize="11" fill="white" fontWeight="800" opacity=".8">
-              {pr.letter}
-            </text>
+          { x: 50, label: "E", h: 130 },
+          { x: 100, label: "D", h: 145 },
+          { x: 150, label: "C", h: 150 },
+          { x: 200, label: "B", h: 145 },
+          { x: 250, label: "A", h: 130 },
+        ].map(p => (
+          <g key={p.label}>
+            {/* Pier body */}
+            <rect x={p.x - 10} y={218 - p.h} width="20" height={p.h}
+              rx="4" fill="white" stroke="#c0d4e8" strokeWidth="0.8"
+              filter="url(#bshadow)" />
+            {/* Gate slots on left */}
+            {[...Array(6)].map((_, j) => (
+              <rect key={`l${j}`} x={p.x - 17} y={218 - p.h + 20 + j * 18}
+                width="7" height="5" rx="1" fill="#ccdde8" />
+            ))}
+            {/* Gate slots on right */}
+            {[...Array(6)].map((_, j) => (
+              <rect key={`r${j}`} x={p.x + 10} y={218 - p.h + 20 + j * 18}
+                width="7" height="5" rx="1" fill="#ccdde8" />
+            ))}
+            {/* Pier label */}
+            <text x={p.x} y={220 - p.h + 12} textAnchor="middle"
+              fontSize="8" fill="#6a8aaa" fontWeight="700">{p.label}</text>
           </g>
         ))}
 
-        {/* ══ T2 Main Building ══ */}
-        <rect x="388" y="52" width="220" height="140" rx="8" fill="#6d28d9" filter="url(#shadow)" opacity=".9" />
-        <rect x="390" y="54" width="216" height="136" rx="7" fill="#7c3aed" />
-        <rect x="390" y="54" width="216" height="18" rx="7" fill="#8b5cf6" />
-        <text x="498" y="66" textAnchor="middle" fontSize="10" fill="white" fontWeight="800" opacity=".9">TERMINAL 2</text>
+        {/* T1 gate label */}
+        <text x="151" y="250" textAnchor="middle"
+          fontSize="12" fill="#3a5a7a" fontWeight="800" opacity=".9">Terminal 1</text>
 
-        {/* G pier (Level 04 - bottom) */}
-        <rect x="395" y="120" width="205" height="28" rx="3" fill="#5b21b6" opacity=".7" />
-        <text x="498" y="139" textAnchor="middle" fontSize="9" fill="#e9d5ff" fontWeight="700">G01–G48 · Lv04</text>
-        {/* H pier (Level 05 - top) */}
-        <rect x="395" y="78" width="205" height="28" rx="3" fill="#5b21b6" opacity=".7" />
-        <text x="498" y="97" textAnchor="middle" fontSize="9" fill="#e9d5ff" fontWeight="700">H01–H48 · Lv05</text>
+        {/* ══════════════════════════════════
+             TERMINAL 2  (right side)
+        ══════════════════════════════════ */}
 
-        {/* ══ T2 Satellite ══ */}
-        <rect x="660" y="52" width="148" height="140" rx="8" fill="#b45309" filter="url(#shadow)" opacity=".9" />
-        <rect x="662" y="54" width="144" height="136" rx="7" fill="#d97706" />
-        <rect x="662" y="54" width="144" height="18" rx="7" fill="#f59e0b" />
-        <text x="734" y="66" textAnchor="middle" fontSize="9" fill="white" fontWeight="800">T2 SATELLITE</text>
-        {/* K pier */}
-        <rect x="667" y="120" width="134" height="28" rx="3" fill="#92400e" opacity=".7" />
-        <text x="734" y="139" textAnchor="middle" fontSize="9" fill="#fef3c7" fontWeight="700">K01–K30 · Lv04</text>
-        {/* L pier */}
-        <rect x="667" y="78" width="134" height="28" rx="3" fill="#92400e" opacity=".7" />
-        <text x="734" y="97" textAnchor="middle" fontSize="9" fill="#fef3c7" fontWeight="700">L01–L30 · Lv05</text>
+        {/* T2 H-pier building (upper, Level 05) */}
+        <rect x="374" y="135" width="235" height="62" rx="7"
+          fill="white" stroke="#c0d4e8" strokeWidth="1" filter="url(#bshadow)" />
+        <rect x="374" y="135" width="235" height="11" rx="7" fill="#eaf1fb" />
+        <rect x="374" y="142" width="235" height="4" fill="#dce8f8" />
+        {/* H gate slots */}
+        {[...Array(9)].map((_, i) => (
+          <rect key={i} x={382 + i * 24} y={162} width="14" height="6" rx="2" fill="#ccdde8" />
+        ))}
+        {[...Array(9)].map((_, i) => (
+          <rect key={i} x={382 + i * 24} y={172} width="14" height="6" rx="2" fill="#ccdde8" />
+        ))}
+        <text x="491" y="153" textAnchor="middle"
+          fontSize="8" fill="#6a8aaa" fontWeight="700">H01–H48 · Lv05</text>
 
-        {/* ── Labels ── */}
-        <text x="14" y="210" fontSize="8" fill="#94a3b8">Flughafen München / Munich Airport</text>
+        {/* T2 Main concourse body */}
+        <rect x="374" y="218" width="235" height="42" rx="7"
+          fill="white" stroke="#c0d4e8" strokeWidth="1" filter="url(#bshadow)" />
+        <rect x="374" y="218" width="235" height="11" rx="7" fill="#eaf1fb" />
+        <rect x="374" y="225" width="235" height="4" fill="#dce8f8" />
 
-        {/* ── Route path ── */}
-        {wpts.length > 1 && (
-          <>
-            {/* Shadow path */}
-            <path
-              d={ptsToD(wpts)}
-              fill="none" stroke="rgba(30,58,138,0.25)"
-              strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"
-            />
-            {/* Animated route */}
-            <path
-              className="route-path"
-              d={ptsToD(wpts)}
-              fill="none" stroke="white"
-              strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"
-              strokeDasharray="900"
-            />
-            {/* Arrow dots along path */}
-            {wpts.slice(1, -1).map((pt, i) => (
-              <circle key={i} cx={pt.x} cy={pt.y} r="5"
-                fill="white" stroke="#1e3a8a" strokeWidth="1.5" opacity=".9" />
-            ))}
-          </>
-        )}
+        {/* T2 G-pier (lower strip, Level 04) */}
+        <rect x="374" y="260" width="235" height="28" rx="4"
+          fill="white" stroke="#c0d4e8" strokeWidth="0.8" />
+        {[...Array(9)].map((_, i) => (
+          <rect key={i} x={382 + i * 24} y={266} width="14" height="6" rx="2" fill="#ccdde8" />
+        ))}
+        {[...Array(9)].map((_, i) => (
+          <rect key={i} x={382 + i * 24} y={275} width="14" height="6" rx="2" fill="#ccdde8" />
+        ))}
+        <text x="491" y="250" textAnchor="middle"
+          fontSize="12" fill="#3a5a7a" fontWeight="800" opacity=".9">Terminal 2</text>
 
-        {/* ── Arrival gate pin (blue) ── */}
-        <g transform={`translate(${from.x},${from.y})`}>
-          <circle className="gate-pulse" cx="0" cy="0" r="11" fill="#2563eb" opacity=".25" />
-          <circle cx="0" cy="0" r="7" fill="#2563eb" stroke="white" strokeWidth="2" />
-          <text x="0" y="3.5" textAnchor="middle" fontSize="7" fill="white" fontWeight="800">✈</text>
+        {/* ══════════════════════════════════
+             T2 SATELLITE  (far right)
+        ══════════════════════════════════ */}
+        <rect x="650" y="133" width="100" height="158" rx="7"
+          fill="white" stroke="#e8d88a" strokeWidth="1.5" filter="url(#bshadow)" />
+        <rect x="650" y="133" width="100" height="11" rx="7" fill="#fef3c7" />
+        <rect x="650" y="140" width="100" height="4" fill="#fde68a" />
+
+        {/* L gates (top) */}
+        <rect x="656" y="158" width="88" height="28" rx="3"
+          fill="#fef9e7" stroke="#fde68a" strokeWidth="0.8" />
+        {[...Array(4)].map((_, i) => (
+          <rect key={i} x={660 + i * 20} y={164} width="12" height="5" rx="1" fill="#fde68a" />
+        ))}
+        {[...Array(4)].map((_, i) => (
+          <rect key={i} x={660 + i * 20} y={172} width="12" height="5" rx="1" fill="#fde68a" />
+        ))}
+
+        {/* K gates (bottom) */}
+        <rect x="656" y="255" width="88" height="28" rx="3"
+          fill="#fef9e7" stroke="#fde68a" strokeWidth="0.8" />
+        {[...Array(4)].map((_, i) => (
+          <rect key={i} x={660 + i * 20} y={261} width="12" height="5" rx="1" fill="#fde68a" />
+        ))}
+        {[...Array(4)].map((_, i) => (
+          <rect key={i} x={660 + i * 20} y={269} width="12" height="5" rx="1" fill="#fde68a" />
+        ))}
+
+        <text x="700" y="218" textAnchor="middle"
+          fontSize="9" fill="#8a6a2a" fontWeight="800">Satellite</text>
+        <text x="700" y="230" textAnchor="middle"
+          fontSize="8" fill="#a08040">T2 · K/L</text>
+
+        {/* ══════════════════════════════════
+             ROUTE LINE
+        ══════════════════════════════════ */}
+        {/* Route glow/shadow */}
+        <path d={pathD} fill="none"
+          stroke="rgba(0,60,160,.18)" strokeWidth="10"
+          strokeLinecap="round" strokeLinejoin="round" />
+        {/* Animated route */}
+        <path d={pathD}
+          className="route-line"
+          fill="none"
+          stroke="#1a6fe8"
+          strokeWidth="5.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="1200"
+          markerEnd="url(#arrowhead)"
+        />
+        {/* Route highlight */}
+        <path d={pathD} fill="none"
+          stroke="rgba(255,255,255,.4)" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* Junction dots at waypoints */}
+        {wpts.slice(1, -1).map((pt, i) => (
+          <g key={i}>
+            <circle cx={pt.x} cy={pt.y} r="7"
+              fill="white" stroke="#1a6fe8" strokeWidth="2"
+              filter="url(#bshadow)" />
+            <circle cx={pt.x} cy={pt.y} r="3" fill="#1a6fe8" />
+          </g>
+        ))}
+
+        {/* ══════════════════════════════════
+             ARRIVAL PIN — orange
+        ══════════════════════════════════ */}
+        <g className="pin-pop">
+          {/* Pulse ring */}
+          <circle cx={from.x} cy={from.y} r="16"
+            fill="#f97316" opacity=".15" className="pin-pulse" />
+          {/* Pin circle */}
+          <circle cx={from.x} cy={from.y} r="10"
+            fill="#f97316" stroke="white" strokeWidth="2.5"
+            filter="url(#pshadow)" />
+          {/* Label badge — positioned above pin */}
+          <rect x={from.x - 26} y={from.y - 46} width="52" height="24"
+            rx="6" fill="#f97316" filter="url(#pshadow)" />
+          {/* Badge notch (triangle) */}
+          <polygon
+            points={`${from.x - 5},${from.y - 22} ${from.x + 5},${from.y - 22} ${from.x},${from.y - 13}`}
+            fill="#f97316" />
+          <text x={from.x - 18} y={from.y - 31} fontSize="8" fill="white">✈</text>
+          <text x={from.x - 5} y={from.y - 31} fontSize="10" fill="white" fontWeight="800">
+            {norm(arrGate)}
+          </text>
         </g>
-        {/* Arrival label */}
-        <rect x={from.x - 22} y={from.y - 30} width="44" height="17" rx="4" fill="#2563eb" />
-        <text x={from.x} y={from.y - 19} textAnchor="middle" fontSize="9" fill="white" fontWeight="800">
-          {norm(arrGate)}
-        </text>
 
-        {/* ── Departure gate pin (urgency color) ── */}
-        <g transform={`translate(${to.x},${to.y})`}>
-          <circle cx="0" cy="0" r="11" fill={u.leftBar} opacity=".25" />
-          <circle cx="0" cy="0" r="7" fill={u.leftBar} stroke="white" strokeWidth="2" />
-          <text x="0" y="3.5" textAnchor="middle" fontSize="7" fill="white" fontWeight="800">★</text>
+        {/* ══════════════════════════════════
+             DEPARTURE PIN — urgency color
+        ══════════════════════════════════ */}
+        <g className="pin-pop" style={{ animationDelay: "1s" }}>
+          <circle cx={to.x} cy={to.y} r="16"
+            fill={pinColor} opacity=".15" className="pin-pulse" />
+          <circle cx={to.x} cy={to.y} r="10"
+            fill={pinColor} stroke="white" strokeWidth="2.5"
+            filter="url(#pshadow)" />
+          {/* Label badge — below pin */}
+          <rect x={to.x - 26} y={to.y + 14} width="52" height="24"
+            rx="6" fill={pinColor} filter="url(#pshadow)" />
+          <polygon
+            points={`${to.x - 5},${to.y + 14} ${to.x + 5},${to.y + 14} ${to.x},${to.y + 10}`}
+            fill={pinColor} />
+          <text x={to.x - 18} y={to.y + 29} fontSize="8" fill="white">✈</text>
+          <text x={to.x - 5} y={to.y + 29} fontSize="10" fill="white" fontWeight="800">
+            {norm(depGate)}
+          </text>
         </g>
-        {/* Departure label */}
-        <rect x={to.x - 22} y={to.y + 16} width="44" height="17" rx="4" fill={u.leftBar} />
-        <text x={to.x} y={to.y + 28} textAnchor="middle" fontSize="9" fill="white" fontWeight="800">
-          {norm(depGate)}
+
+        {/* ── Footer ── */}
+        <text x="14" y="370" fontSize="8" fill="#6080a0" fontWeight="500">
+          Flughafen München / Munich Airport
         </text>
 
-        {/* ── Distance pill ── */}
-        <rect x="310" y="198" width="200" height="22" rx="11" fill="white" stroke="#e5e7eb" strokeWidth="1" />
-        <text x="410" y="213" textAnchor="middle" fontSize="10" fill="#374151" fontWeight="700">
-          🚶 ≈ {walkTime} min walking · {available} min available
+        {/* ── Distance / time pill ── */}
+        <rect x="245" y="324" width="270" height="30" rx="15"
+          fill="white" stroke="#d0dce8" strokeWidth="1"
+          filter="url(#bshadow)" />
+        <text x="380" y="343" textAnchor="middle"
+          fontSize="12" fill="#1e293b" fontWeight="700">
+          🚶 {walkTime} min walking · {available} min available
         </text>
+
       </svg>
     </div>
   );
@@ -409,10 +526,10 @@ function DirectionsScreen({ result, onBack }) {
   const { Icon } = u;
 
   return (
-    <div style={{ background: "#f1f5f9", minHeight: "100vh", fontFamily: "inherit" }}>
+    <div style={{ background: "#f1f5f9", minHeight: "100vh" }}>
 
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)", padding: "20px 20px 28px" }}>
+      <div style={{ background: "linear-gradient(135deg,#1e3a8a,#1e40af)", padding: "20px 20px 28px" }}>
         <button className="btn-back" onClick={onBack}>
           <ArrowLeft size={15} /> Back
         </button>
@@ -423,44 +540,45 @@ function DirectionsScreen({ result, onBack }) {
               Gate {result.arrGate} → Gate {result.depGate} &nbsp;·&nbsp; ≈ {fmtMin(result.walkTime)} walk
             </p>
           </div>
-          <div style={{
-            background: u.bg, border: `1.5px solid ${u.border}`,
-            borderRadius: 20, padding: "5px 12px",
-            display: "flex", alignItems: "center", gap: 5, flexShrink: 0,
-          }}>
+          <div style={{ background: u.bg, border: `1.5px solid ${u.border}`, borderRadius: 20, padding: "5px 12px", display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
             <Icon size={13} style={{ color: u.color }} />
-            <span style={{ fontSize: 12, fontWeight: 700, color: u.color }}>
-              {u.label.split(" ")[0].toUpperCase()}
-            </span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: u.color }}>{u.label.split(" ")[0].toUpperCase()}</span>
           </div>
         </div>
       </div>
 
-      <div style={{ padding: "16px 16px 40px" }}>
+      <div style={{ padding: "16px 16px 32px" }}>
 
-        {/* Urgent tip */}
-        {(result.urgency === "risky" || result.urgency === "tight") && (
-          <div className="animate-up" style={{
-            background: result.urgency === "risky" ? "#fef2f2" : "#fff7ed",
-            border: `1px solid ${result.urgency === "risky" ? "#fca5a5" : "#fdba74"}`,
-            borderRadius: 12, padding: "13px 16px",
-            display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 14,
-          }}>
-            <AlertTriangle size={17} style={{ color: result.urgency === "risky" ? "#dc2626" : "#c2410c", flexShrink: 0, marginTop: 1 }} />
-            <p style={{ fontSize: 13, lineHeight: 1.5, color: result.urgency === "risky" ? "#991b1b" : "#92400e" }}>
-              {u.tip}
-            </p>
+        {/* Results card */}
+        <div className="card animate-up">
+          <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 14 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: "#eff6ff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <BarChart2 size={17} style={{ color: "#2563eb" }} />
+            </div>
+            <h2 style={{ fontSize: 17, fontWeight: 800, color: "#0d0d0d" }}>Results</h2>
           </div>
-        )}
+          <div className="result-card" style={{ background: u.bg, border: `1px solid ${u.border}`, borderLeftColor: u.leftBar }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 13, flex: 1 }}>
+              <u.Icon size={28} style={{ color: u.color, flexShrink: 0 }} />
+              <div>
+                <p style={{ fontSize: 15, fontWeight: 700, color: u.color, marginBottom: 2 }}>{u.label}</p>
+                <p style={{ fontSize: 14, color: "#374151" }}>
+                  You have <strong style={{ color: u.color }}>{fmtMinLong(result.available)}</strong> to get there.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        {/* Map card */}
+        {/* Map card — exactly as mockup */}
         <div className="card animate-up-2">
           <div style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 14 }}>
             <div style={{ width: 32, height: 32, borderRadius: 8, background: "#eff6ff", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <MapPin size={17} style={{ color: "#2563eb" }} />
+              <Navigation size={17} style={{ color: "#2563eb" }} />
             </div>
             <h2 style={{ fontSize: 17, fontWeight: 800, color: "#0d0d0d" }}>How to go there</h2>
           </div>
+
           <AirportMap
             arrGate={result.arrGate}
             depGate={result.depGate}
@@ -469,7 +587,7 @@ function DirectionsScreen({ result, onBack }) {
             available={result.available}
           />
 
-          {/* Metrics row */}
+          {/* Metrics */}
           <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
             {[
               { label: "Walk time", value: fmtMin(result.walkTime) },
@@ -485,25 +603,35 @@ function DirectionsScreen({ result, onBack }) {
           </div>
         </div>
 
-        {/* Steps card */}
-        <div className="card animate-up-3">
+        {/* Urgent alert */}
+        {(result.urgency === "risky" || result.urgency === "tight") && (
+          <div className="animate-up-3" style={{
+            background: result.urgency === "risky" ? "#fef2f2" : "#fff7ed",
+            border: `1px solid ${result.urgency === "risky" ? "#fca5a5" : "#fdba74"}`,
+            borderRadius: 12, padding: "13px 16px",
+            display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 14,
+          }}>
+            <AlertTriangle size={17} style={{ color: result.urgency === "risky" ? "#dc2626" : "#c2410c", flexShrink: 0, marginTop: 1 }} />
+            <p style={{ fontSize: 13, lineHeight: 1.5, color: result.urgency === "risky" ? "#991b1b" : "#92400e" }}>{u.tip}</p>
+          </div>
+        )}
+
+        {/* Step-by-step */}
+        <div className="card">
           <p style={{ fontSize: 14, fontWeight: 700, color: "#374151", marginBottom: 20 }}>Step-by-step directions</p>
           <div style={{ position: "relative" }}>
             <div style={{ position: "absolute", left: 17, top: 18, bottom: 18, width: 2, background: "#f3f4f6", zIndex: 0 }} />
             {result.directions.map((step, i) => {
               const isLast = i === result.directions.length - 1;
               return (
-                <div key={i} className="step-row" style={{ animationDelay: `${.22 + i * .07}s` }}>
+                <div key={i} className="step-row" style={{ animationDelay: `${.1 + i * .07}s` }}>
                   <div style={{
                     width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
                     background: isLast ? u.color : "#1e3a8a",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     border: "3px solid white", boxShadow: "0 0 0 1.5px #e5e7eb", zIndex: 1,
                   }}>
-                    {isLast
-                      ? <MapPin size={15} color="white" />
-                      : <span style={{ fontSize: 12, fontWeight: 800, color: "white" }}>{i + 1}</span>
-                    }
+                    {isLast ? <MapPin size={15} color="white" /> : <span style={{ fontSize: 12, fontWeight: 800, color: "white" }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1, paddingTop: 5 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
@@ -528,10 +656,10 @@ function DirectionsScreen({ result, onBack }) {
           </div>
         </div>
 
-        {/* Go Back button */}
+        {/* Go Back — big blue button like mockup */}
         <button className="btn-primary" onClick={onBack}
-          style={{ width: "100%", marginTop: 4, fontSize: 16, padding: "14px" }}>
-          ← Go Back
+          style={{ width: "60%", margin: "8px auto 0", display: "block", fontSize: 16, padding: "14px", borderRadius: 12 }}>
+          Go Back
         </button>
       </div>
     </div>
@@ -557,9 +685,7 @@ function MainScreen({ onHowToGo }) {
   const arrInfo = ARRIVALS_DB[fromKey] || null;
   const depInfo = DEPARTURES_DB[toKey] || null;
 
-  useEffect(() => {
-    if (depInfo) { setGate(depInfo.depGate); setMinsManual(String(depInfo.minsToBrd)); }
-  }, [toKey]);
+  useEffect(() => { if (depInfo) { setGate(depInfo.depGate); setMinsManual(String(depInfo.minsToBrd)); } }, [toKey]);
 
   const arrPier = arrInfo?.arrGate ? pier(arrInfo.arrGate) : null;
   const depPier = gate ? pier(gate) : null;
@@ -588,7 +714,7 @@ function MainScreen({ onHowToGo }) {
     <div style={{ background: "#f1f5f9", minHeight: "100vh" }}>
 
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%)", padding: "20px 20px 28px" }}>
+      <div style={{ background: "linear-gradient(135deg,#1e3a8a,#1e40af)", padding: "20px 20px 28px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
             <div style={{ width: 50, height: 50, borderRadius: 13, background: "#2563eb", boxShadow: "0 2px 10px rgba(0,0,0,.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -605,7 +731,7 @@ function MainScreen({ onHowToGo }) {
 
       <div style={{ padding: "14px 14px 36px" }}>
 
-        {/* Airport Configuration */}
+        {/* Airport Config */}
         <div className="card animate-up">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 3 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
@@ -698,6 +824,7 @@ function MainScreen({ onHowToGo }) {
                 How to go there <ArrowRight size={14} />
               </button>
             </div>
+            {/* Risk Indicator */}
             <div style={{ textAlign: "center" }}>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 8 }}>Risk Indicator</p>
               <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
