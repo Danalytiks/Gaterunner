@@ -1,4 +1,4 @@
-# ✈️ GateRunner
+# ✈️ GateRunner™ 
 
 > **"Together, we'll get there on time!"**
 
@@ -137,4 +137,4 @@ Built by **Daniela Costa Glotzbach** — working at Munich Airport (MUC) and pas
 
 ---
 
-*GateRunner — because every minute counts.* ⏱️
+*GateRunner™ — because every minute counts.* ⏱️
