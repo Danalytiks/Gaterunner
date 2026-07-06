@@ -1,4 +1,4 @@
-# ✈️ GateRunner±“
+# ✈️ GateRunner™
 
 > **"Together, we'll get there on time!"**
 
@@ -118,10 +118,10 @@ src/
 
 ## 👨‍💻 Author
 
-**Dani** — Munich Airport (MUC) operations + Data Science
+**Daniela C.Glotzbach** — Munich Airport (MUC) operations + Data Science
 
 [![GitHub](https://img.shields.io/badge/GitHub-Danalytiks-181717?style=flat&logo=github)](https://github.com/Danalytiks)
 
 ---
 
-*GateRunner — because every minute counts.* ⏱️
+*GateRunner™ — because every minute counts.* ⏱️
