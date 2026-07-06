@@ -2,7 +2,7 @@ import { AlertTriangle, CheckCircle, Clock, ArrowRight } from "lucide-react";
 const CONFIG = {
   tight:    { label:"Tight Connection", time:"15 minutes", Icon:AlertTriangle, color:"#c2410c", bg:"#fff7ed", border:"#fdba74", leftBar:"#f97316" },
   safe:     { label:"Safe Connection",  time:"2 hours",    Icon:CheckCircle,   color:"#15803d", bg:"#f0fdf4", border:"#86efac", leftBar:"#22c55e" },
-  moderate: { label:"Moderate",         time:"45 minutes", Icon:Clock,         color:"#b91c1c", bg:"#fef2f2", border:"#fca5a5", leftBar:"#ef4444" },
+  moderate: { label:"At Risk",          time:"45 minutes", Icon:Clock,         color:"#b91c1c", bg:"#fef2f2", border:"#fca5a5", leftBar:"#ef4444" },
 };
 export default function ResultCard({ type, onHowToGoThere }) {
   const c = CONFIG[type]; if (!c) return null;

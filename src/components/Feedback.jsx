@@ -1,9 +1,9 @@
 import { CheckCircle, AlertTriangle, XCircle, MessageCircle } from "lucide-react";
 import Card from "./Card";
 const OPTIONS = [
-  { key:"safe",  Icon:CheckCircle,  label:"Yes — Safe",          color:"#15803d", border:"#86efac", bg:"#f0fdf4", msg:"Great! Thanks for the feedback. Safe travels! ✈" },
-  { key:"tight", Icon:AlertTriangle, label:"Yes — Tight",         color:"#c2410c", border:"#fdba74", bg:"#fff7ed", msg:"Phew, close one! Thank you for the feedback." },
-  { key:"risky", Icon:XCircle,       label:"No — Missed (Risky)", color:"#b91c1c", border:"#fca5a5", bg:"#fef2f2", msg:"We're sorry. Please visit your airline's service desk." },
+  { key:"safe",        Icon:CheckCircle,  label:"Yes — Safe",          color:"#15803d", border:"#86efac", bg:"#f0fdf4", msg:"Great! Thanks for the feedback. Safe travels! ✈" },
+  { key:"tight",       Icon:AlertTriangle, label:"Yes — Tight",         color:"#c2410c", border:"#fdba74", bg:"#fff7ed", msg:"Phew, close one! Thank you for the feedback." },
+  { key:"compromised", Icon:XCircle,       label:"No — Compromised",    color:"#b91c1c", border:"#fca5a5", bg:"#fef2f2", msg:"We're sorry. Please contact your airline's service desk." },
 ];
 export default function Feedback({ feedback, setFeedback }) {
   const selected = OPTIONS.find(o=>o.key===feedback);
