@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+∑import { useState, useEffect, useRef } from "react";
 import {
   MapPin, Plane, BarChart2, MessageCircle,
   AlertTriangle, CheckCircle, Clock, XCircle,
@@ -529,75 +529,20 @@ function DirectionsScreen({ result, onBack }) {
     <div style={{ background: "#f1f5f9", minHeight: "100vh" }}>
 
       {/* Header */}
-      {/* Header */}
-      <div
-        style={{
-          background: "linear-gradient(135deg,#0b4dbb,#003b8f)",
-          padding: "34px 42px",
-          minHeight: 180,
-          display: "flex",
-          alignItems: "center",
-          borderRadius: "18px 18px 0 0",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <div
-            style={{
-              width: 92,
-              height: 92,
-              borderRadius: 18,
-              background: "linear-gradient(135deg,#2584ff,#0b5ed7)",
-              boxShadow: "0 10px 24px rgba(0,0,0,.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 28,
-            }}
-          >
-            <Plane size={48} color="white" />
-          </div>
-
+      <div style={{ background: "linear-gradient(135deg,#1e3a8a,#1e40af)", padding: "20px 20px 28px" }}>
+        <button className="btn-back" onClick={onBack}>
+          <ArrowLeft size={15} /> Back
+        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
-            <h1
-              style={{
-                fontSize: 58,
-                fontWeight: 900,
-                color: "white",
-                letterSpacing: -1,
-                margin: 0,
-                lineHeight: 1,
-              }}
-            >
-              GateRunner
-            </h1>
-
-            <p
-              style={{
-                fontSize: 25,
-                color: "rgba(255,255,255,.95)",
-                marginTop: 12,
-                marginBottom: 0,
-              }}
-            >
-              Together, we'll get there on time!
+            <h2 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 4 }}>How to get there</h2>
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,.65)" }}>
+              Gate {result.arrGate} → Gate {result.depGate} &nbsp;·&nbsp; ≈ {fmtMin(result.walkTime)} walk
             </p>
           </div>
-
-          <div
-            style={{
-              marginLeft: "auto",
-              width: 92,
-              height: 92,
-              borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,.22)",
-              background: "rgba(255,255,255,.06)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 44,
-            }}
-          >
-            🏃
+          <div style={{ background: u.bg, border: `1.5px solid ${u.border}`, borderRadius: 20, padding: "5px 12px", display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
+            <Icon size={13} style={{ color: u.color }} />
+            <span style={{ fontSize: 12, fontWeight: 700, color: u.color }}>{u.label.split(" ")[0].toUpperCase()}</span>
           </div>
         </div>
       </div>
@@ -769,84 +714,21 @@ function MainScreen({ onHowToGo }) {
     <div style={{ background: "#f1f5f9", minHeight: "100vh" }}>
 
       {/* Header */}
-      <div
-        style={{
-          background: "linear-gradient(135deg,#0b4dbb,#003b8f)",
-          padding: "34px 42px",
-          minHeight: 220,
-          display: "flex",
-          alignItems: "center",
-          borderRadius: "18px 18px 0 0",
-          boxShadow: "0 4px 15px rgba(0,0,0,.15)"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%"
-          }}
-        >
-          <div
-            style={{
-              width: 110,
-              height: 110,
-              borderRadius: 18,
-              background: "linear-gradient(135deg,#2584ff,#0b5ed7)",
-              boxShadow: "0 10px 24px rgba(0,0,0,.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 28
-            }}
-          >
-            <Plane size={48} color="white" />
+      <div style={{ background: "linear-gradient(135deg,#1e3a8a,#1e40af)", padding: "20px 20px 28px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 13 }}>
+            <div style={{ width: 50, height: 50, borderRadius: 13, background: "#2563eb", boxShadow: "0 2px 10px rgba(0,0,0,.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Plane size={26} color="white" />
+            </div>
+            <div>
+              <h1 style={{ fontSize: 26, fontWeight: 900, color: "white", letterSpacing: -.5 }}>GateRunner</h1>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,.7)", marginTop: 1 }}>Together, we'll get there on time!</p>
+            </div>
           </div>
-
-          <div>
-            <h1
-              style={{
-                fontSize: 72,
-                fontWeight: 900,
-                color: "white",
-                margin: 0,
-                lineHeight: 1,
-                letterSpacing: -1
-              }}
-            >
-              GateRunner
-            </h1>
-
-            <p
-              style={{
-                fontSize: 25,
-                color: "rgba(255,255,255,.95)",
-                marginTop: 12,
-                marginBottom: 0
-              }}
-            >
-              Together, we'll get there on time!
-            </p>
-          </div>
-
-          <div
-            style={{
-              marginLeft: "auto",
-              width: 110,
-              height: 110,
-              borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,.22)",
-              background: "rgba(255,255,255,.06)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 54
-            }}
-          >
-            🏃
-          </div>
+          <div style={{ width: 44, height: 44, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,.35)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>🏃</div>
         </div>
       </div>
+
       <div style={{ padding: "14px 14px 36px" }}>
 
         {/* Airport Config */}
